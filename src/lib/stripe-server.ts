@@ -1,7 +1,9 @@
 import { loadStripe } from '@stripe/stripe-js';
 import { supabase } from './supabase';
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+export const stripePromise = loadStripe(
+  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
+);
 
 export async function createCheckoutSession(priceId: string, userId: string) {
   try {
@@ -16,21 +18,15 @@ export async function createCheckoutSession(priceId: string, userId: string) {
     });
 
     if (error) throw error;
-    if (!data) throw new Error('No session data received');
+    if (!data?.url) throw new Error('No checkout URL received');
 
-    // Redirect to Checkout
-    const stripe = await stripePromise;
-    if (!stripe) throw new Error('Stripe failed to load');
-
-    const { error: checkoutError } = await stripe.redirectToCheckout({
-      sessionId: data.sessionId,
-    });
-
-    if (checkoutError) throw checkoutError;
+    // Redirect to Stripe Checkout
+    window.location.href = data.url;
 
     return data;
   } catch (error) {
-    console.error('Error creating checkout session:', error);
+    const message = error instanceof Error ? error.message : 'Failed to send request to Edge Function';
+    console.error('Error creating checkout session:', message);
     throw error;
   }
 }

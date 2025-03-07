@@ -12,6 +12,20 @@ export default function Pricing() {
         <p className="mt-4 text-lg text-gray-600">
           Get the insights you need to improve your resume and land your dream job
         </p>
+        <div className="mt-4 max-w-2xl mx-auto">
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-800">
+            <p className="font-medium mb-1">⚠️ Alpha Project Disclaimer</p>
+            <p>
+              This is an alpha project currently under active development. By making a purchase, you acknowledge that:
+            </p>
+            <ul className="list-disc list-inside mt-2 space-y-1">
+              <li>All purchases are non-refundable</li>
+              <li>Features may be experimental or subject to change</li>
+              <li>You're supporting ongoing development and gaining early access</li>
+              <li>Service availability and features are not guaranteed</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-3">
